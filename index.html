@@ -3,13 +3,21 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+  <link rel="icon" type="image/svg+xml" href="/MineCraft_NBT_Editor/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
     content="EmandoMundus - High performance NBT Editor for Minecraft Bedrock & Java level.dat. No ads, client-side only.">
   <title>EmandoMundus | Bedrock Level.dat Editor</title>
-  <script type="module" crossorigin src="./assets/index-DLWNLq6r.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-BrDHtM3c.css">
+
+  <!-- Fallback production styling if Tailwind fails loading variables -->
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+  </style>
+  <script type="module" crossorigin src="/MineCraft_NBT_Editor/assets/index-BtW5eam7.js"></script>
+  <link rel="stylesheet" crossorigin href="/MineCraft_NBT_Editor/assets/index-B5Asi3QC.css">
 </head>
 
 <body class="h-screen flex flex-col bg-minecraft-bg text-minecraft-text font-pixel antialiased">
@@ -18,7 +26,6 @@
   <header
     class="h-16 border-b border-minecraft-border flex items-center px-6 bg-minecraft-panel justify-between shrink-0 drop-shadow-md z-10">
     <div class="flex items-center gap-4">
-      <!-- Logo Icon Block -->
       <div class="w-10 h-10 bg-minecraft-accent flex items-center justify-center rounded">
         <span class="text-2xl font-bold text-white">EM</span>
       </div>
@@ -44,11 +51,22 @@
     </div>
   </header>
 
+  <!-- Error Logger (Hidden unless error occurs) -->
+  <div id="error-console"
+    class="hidden fixed bottom-10 right-4 w-96 bg-red-900/90 border border-red-500 p-4 text-white font-mono text-xs z-50 rounded shadow-lg overflow-auto max-h-64">
+    <div class="flex justify-between border-b border-red-400 mb-2 pb-1">
+      <span class="font-bold">Error Log</span>
+      <button onclick="document.getElementById('error-console').classList.add('hidden')"
+        class="hover:text-red-200">✕</button>
+    </div>
+    <pre id="error-content" class="whitespace-pre-wrap"></pre>
+  </div>
+
   <!-- Main Workspace -->
   <main class="flex-1 flex overflow-hidden">
 
     <!-- Left Pane: Editor Tree -->
-    <section class="flex-1 flex flex-col border-r border-minecraft-border min-w-0 bg-[#0a0a0a] relative">
+    <section class="flex-1 flex flex-col border-r border-minecraft-border min-w-0 bg-[#0a0a0a] text-gray-200 relative">
       <div class="p-3 bg-minecraft-panel border-b border-minecraft-border flex justify-between items-center">
         <h2 class="text-xl text-minecraft-key font-bold tracking-wide">NBT Structure</h2>
         <span class="text-xs text-gray-600 font-mono" id="file-status">Waiting for file...</span>
@@ -106,8 +124,10 @@
   <footer
     class="h-8 bg-minecraft-panel border-t border-minecraft-border flex items-center px-4 text-[10px] font-sans text-minecraft-subtext justify-between shrink-0 select-none">
     <div class="flex gap-4">
-      <span class="hover:text-white cursor-pointer transition-colors">Documentation</span>
-      <span class="hover:text-white cursor-pointer transition-colors">GitHub</span>
+      <a href="https://bedrock.dev/" target="_blank"
+        class="hover:text-white cursor-pointer transition-colors underline decoration-dotted">Documentation</a>
+      <a href="https://github.com/0Jos-hua0/MineCraft_NBT_Editor" target="_blank"
+        class="hover:text-white cursor-pointer transition-colors underline decoration-dotted">GitHub</a>
     </div>
     <div class="flex items-center gap-2">
       <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
@@ -115,6 +135,27 @@
     </div>
   </footer>
 
+  <!-- Global Error Handler -->
+  <script>
+    window.onerror = function (message, source, lineno, colno, error) {
+      const consoleEl = document.getElementById('error-console');
+      const contentEl = document.getElementById('error-content');
+      if (consoleEl && contentEl) {
+        consoleEl.classList.remove('hidden');
+        contentEl.textContent += `[Global Error] ${message} at ${source}:${lineno}\n`;
+      }
+    };
+
+    // Capture unhandled promise rejections (async errors)
+    window.onunhandledrejection = function (event) {
+      const consoleEl = document.getElementById('error-console');
+      const contentEl = document.getElementById('error-content');
+      if (consoleEl && contentEl) {
+        consoleEl.classList.remove('hidden');
+        contentEl.textContent += `[Async Error] ${event.reason}\n`;
+      }
+    };
+  </script>
 </body>
 
 </html>
