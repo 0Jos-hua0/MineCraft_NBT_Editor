@@ -12,5 +12,5 @@ export default defineConfig({
             protocolImports: true,
         }),
     ],
-    base: './', // For GitHub Pages relative paths
+    base: '/MineCraft_NBT_Editor/', // Explicit repo name for GitHub Pages
 });
