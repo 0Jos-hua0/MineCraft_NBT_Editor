@@ -2,7 +2,6 @@
 
 **EmandoMundus** is a high-performance, client-side NBT Editor designed for **Minecraft Bedrock Edition** directly in your browser. It specializes in editing `level.dat` files with support for Deep Nested editing, Little Endian parsing, and safety features.
 
-![Editor Preview](https://via.placeholder.com/800x400?text=EmandoMundus+Editor)
 
 ## ✨ Features
 
@@ -43,4 +42,4 @@ npm run dev
 Editing `level.dat` can corrupt your world save. **ALWAYS make a backup** of your world folder before using this tool.
 
 ---
-*Created by Antigravity Agent*
+
